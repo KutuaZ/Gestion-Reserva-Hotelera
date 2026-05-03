@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WebHotelPacificRef.Models.Habitacion>
+
+@{
+    ViewData["Title"] = "Estado de Habitaciones";
+
+    // Contamos los estados usados C# (LINQ) para el resumen rapido
+    var total = Model.Count();
+    var disponibles = Model.Count(h => h.Estado == 1);
+    var ocupadas = Model.Count(h => h.Estado == 2);
+    var mantencion = Model.Count(h => h.Estado == 3);
+
+    //Separacion de habitaciones por numeros
+    //Piso 1: Todo lo que esta entre 100 y 199
+    var piso1 = Model.Where(h => h.Numero >= 100 && h.Numero < 200).OrderBy(h => h.Numero);
+
+    //Piso 2: Todo lo que esta entre 200 y 299
+    var piso2 = Model.Where(h => h.Numero >= 200 && h.Numero < 300).OrderBy(h => h.Numero);
+}
+
+<div class="text-center mb-4">
+    <h2>Estado De Habitaciones - Hoy</h2>
+</div>
+
+
+<!-- Cuadro de resumen rapido-->
+<div class="card bg-light mb-5 mx-auto" style="max-width: 800px;">
+    <div class="card-body text-center">
+        <h4 class="card-title fw-bold">Resumen Rapido</h4>
+        <h5 class="mb-4"><span class="badge bg-white text-dark border">Total Habitaciones: @total</span></h5>
+
+        <div class="d-flex justify-content-center gap-4">
+            <h5 class="text-success bg-white px-3 py-1 border fw-bold">Disponible: @disponibles</h5>
+            <h5 class="text-danger bg-white px-3 py-1 border fw-bold">Ocupadas: @ocupadas</h5>
+            <h5 class="text-warning bg-white px-3 py-1 border fw-bold">Mantencion: @mantencion</h5>
+        </div>
+    </div>
+</div>
+
+<!-- Grilla de Cuadrados Dividido por pisos-->
+<div class="container">
+    <div class="row">
+
+        <!-- Columna Izquierda: Piso 1 -->
+        <div class="col border-end">
+            <h4 class="text-center fw-bold mb-4">Piso 1</h4>
+            <div class="row justify-content-center">
+                @foreach (var habitacion in piso1)
+                {
+                    string colorClase = "";
+                    if (habitacion.Estado == 1) { colorClase =  "bg-success"; } // Verde para disponible
+                    else if (habitacion.Estado == 2) { colorClase =  "bg-danger"; } // Rojo para ocupada
+                    else if (habitacion.Estado == 3) { colorClase =  "bg-warning"; } // Amarillo para mantencion"
+
+                    <div class="col-auto mb-4 d-flex justify-content-center">
+                        <div class="card text-white fw-bold @colorClase d-flex align-items-center justify-content-center" style="width: 80px; height: 50px; border-radius: 0;">
+                            @habitacion.Numero
+                        </div>  
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Piso 2 -->
+        <div class="col-md-6">
+            <h4 class="text-center fw-bold mb-4">Piso 2</h4>
+            <div class="row justify-content-center">
+                @foreach (var habitacion in piso2)
+                {
+                    string colorClase = "";
+                    if (habitacion.Estado == 1) { colorClase = "bg-success"; } // Verde para disponible
+                    else if (habitacion.Estado == 2) { colorClase = "bg-danger"; } // Rojo para ocupada
+                    else if (habitacion.Estado == 3) { colorClase = "bg-warning"; } // Amarillo para mantencion"
+
+                    <div class="col-auto mb-4 d-flex justify-content-center">
+                        <div class="card text-white fw-bold @colorClase d-flex align-items-center justify-content-center" style="width: 80px; height: 50px; border-radius: 0;">
+                            @habitacion.Numero
+                        </div>  
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

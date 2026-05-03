@@ -1,8 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Pacific Reef - Inicio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        /* Imagen de fondo */
+        .hero-bg {
+            background-image: url('/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        .top-bar { background-color: #1a36c4; }
+        .nav-bar-light { background-color: #8fa5ff; }
+    </style>
+</head>
+<body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <!-- Header / Navbars -->
+    <header>
+        <div class="top-bar d-flex justify-content-between align-items-center px-4 py-2">
+            <div style="width: 150px;"></div> <!-- Espaciador invisible -->
+            <img src="~/logo.png" alt="Logo" style="height: 80px;" />
+            <button class="btn btn-light fw-bold">Iniciar Sesion</button>
+        </div>
+        <div class="nav-bar-light border-bottom border-dark py-2">
+            <ul class="nav justify-content-center fw-bold text-dark fs-5 gap-5">
+                <li><a href="#" class="text-dark text-decoration-none">Inicio</a></li>
+                <li><a href="#" class="text-dark text-decoration-none">Habitaciones</a></li>
+                <li><a href="#" class="text-dark text-decoration-none">Nosotros</a></li>
+                <li><a href="#" class="text-dark text-decoration-none">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Contenido con Imagen de Fondo -->
+    <div class="hero-bg d-flex justify-content-center align-items-start pt-5">
+        
+        <!-- Mensaje de éxito si viene de pagar -->
+        @if (TempData["MensajeExito"] != null)
+        {
+            <div class="alert alert-success position-absolute top-50 start-50 translate-middle fs-4 fw-bold shadow">
+                @TempData["MensajeExito"]
+            </div>
+        }
+
+        <!-- Caja de Búsqueda -->
+        <div class="bg-white p-4 shadow d-flex align-items-end gap-4 mt-5" style="border-radius: 8px;">
+            <div>
+                <label class="fw-bold fs-5 mb-2">Entrada:</label>
+                <input type="date" class="form-control" />
+            </div>
+            <div>
+                <label class="fw-bold fs-5 mb-2">Salida:</label>
+                <input type="date" class="form-control" />
+            </div>
+            <div>
+                <label class="fw-bold fs-5 mb-2">Personas:</label>
+                <input type="number" class="form-control" min="1" />
+            </div>
+            <!-- Botón que lleva al Checkout -->
+            <a href="/Home/Checkout" class="btn btn-primary fw-bold px-4 py-3" style="background-color: #1a36c4;">Buscar<br>Disponibilidad</a>
+        </div>
+    </div>
+
+</body>
+</html>
